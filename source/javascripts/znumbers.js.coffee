@@ -1,22 +1,23 @@
 window.onload = ->
   enchant()
 
-  game = new Core(320, 320)
+  game = new Core(320, 360)
   game.fps = 30
   game._n = 1
 
   ButtonLabel = Class.create(Label, {
     initialize: (number)->
-      Label.call(this, 32, 32)
+      Label.call(this, 60, 60)
       this.x = 8
       this.y = 8
-      this.color = "#cccccc"
+      this.color = "#ffffff"
       this.text = number
+      this.font = "32px 'Consolas', 'Monaco', 'ＭＳ ゴシック'";
   })
 
   ButtonSprite = Class.create(Sprite, {
     initialize: ->
-      Sprite.call(this, 32, 32)
+      Sprite.call(this, 60, 60)
       this.x = 0
       this.y = 0
       this._framecount = 0
@@ -34,9 +35,9 @@ window.onload = ->
       x = (n - 1) % 5
       y = parseInt((n - 1) / 5, 10)
 
-      Group.call(this, 32, 32)
-      this.x = x * 36 + 4
-      this.y = y * 36 + 4
+      Group.call(this, 60, 60)
+      this.x = x * 64
+      this.y = y * 64
       this._n = number
       this._button = new ButtonSprite()
       this.addChild(this._button)
@@ -61,5 +62,16 @@ window.onload = ->
 
     for i in [1..25]
       new Button(i, shuffled[i - 1]) # [REFACTOR]
+
+    timer = new Label(100, 30)
+    timer.x = 4
+    timer.y = 324
+    timer.text = "0"
+    timer._t = 0
+    timer.color = "#000000"
+    timer.addEventListener 'enterframe', ->
+      this._t += 1
+      this.text = timer._t
+    game.rootScene.addChild timer
 
   game.start()
