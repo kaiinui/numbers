@@ -78,6 +78,7 @@ window.onload = ->
     timer.y = 324
     timer.text = "0"
     timer._t = 0
+    timer.font = "32px 'Consolas', 'Monaco', 'ＭＳ ゴシック'";
     timer.color = "#000000"
     timer.addEventListener 'enterframe', ->
       if game._state is "PLAYING"
