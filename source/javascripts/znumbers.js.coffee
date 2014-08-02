@@ -19,7 +19,14 @@ window.onload = ->
       Sprite.call(this, 32, 32)
       this.x = 0
       this.y = 0
-      this.backgroundColor = "#000000"
+      this._framecount = 0
+      this.backgroundColor = "#002366"
+    onenterframe: -> # [REFACTOR] dirty implementation
+      if this._framecount >= 1
+        this._framecount += 1
+        if this._framecount >= 3
+          this.backgroundColor = "#002366"
+          this._framecount = 0
   })
 
   Button = Class.create(Group, {
@@ -31,14 +38,18 @@ window.onload = ->
       this.x = x * 36 + 4
       this.y = y * 36 + 4
       this._n = number
-      this.addChild(new ButtonSprite())
+      this._button = new ButtonSprite()
+      this.addChild(this._button)
       this.addChild(new ButtonLabel(number))
       game.rootScene.addChild(this)
 
     ontouchstart: ->
-      if(game._n is this._n)
+      if game._n is this._n
         this.remove()
         game._n += 1
+      else
+        this._button.backgroundColor = "#cc0000"
+        this._button._framecount = 1
   })
 
 
