@@ -6,12 +6,14 @@ window.onload = ->
 
   Button = Class.create(Sprite, {
     initialize: (n)->
+      x = (n - 1) % 5
+      y = parseInt((n - 1) / 5, 10)
+
       Sprite.call(this, 32, 32)
       this.backgroundColor = "#000000"
-      this.x = (n - 1) * 34
-      this.y = 0
+      this.x = x * 36 + 4
+      this.y = y * 36 + 4
       game.rootScene.addChild this
-      console.log n
   })
 
   game.onload = ->
