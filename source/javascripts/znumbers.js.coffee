@@ -5,17 +5,17 @@ window.onload = ->
   game.fps = 30
 
   Button = Class.create(Sprite, {
-    initialize: ->
+    initialize: (n)->
       Sprite.call(this, 32, 32)
       this.backgroundColor = "#000000"
-      this.x = 0
+      this.x = (n - 1) * 34
       this.y = 0
       game.rootScene.addChild this
+      console.log n
   })
 
   game.onload = ->
-    button = new Button()
-
-    game.rootScene.addChild button
+    for i in [1..25]
+      button = new Button(i)
 
   game.start()
