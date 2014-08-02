@@ -1,6 +1,8 @@
 window.onload = ->
   enchant()
 
+  enchant.Sound.enabledInMobileSafari = true
+
   game = new Core(320, 360)
   game.fps = 30
   game._n = 1
