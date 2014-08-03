@@ -13,6 +13,16 @@ window.onload = ->
   game.fps = 30
   game.preload(['yubi.mp3', 'error.mp3', 'fin.mp3'])
 
+  SceneManager = {
+    currentScene: null,
+    pushScene: (scene)->
+      @_removeCurrentScene()
+      @currentScene = new GameScene()
+      game.rootScene.addChild @currentScene
+    _removeCurrentScene: ->
+      game.rootScene.removeChild @currentScene if @currentScene
+  }
+
 
   ButtonLabel = Class.create(Label, {
     initialize: (number)->
@@ -96,9 +106,7 @@ window.onload = ->
   })
 
   window.initialize = ->
-    game.rootScene.removeChild game._root if game._root
-    game._root = new GameScene()
-    game.rootScene.addChild game._root
+    SceneManager.pushScene(new GameScene())
 
   game.onload = ->
     initialize()
