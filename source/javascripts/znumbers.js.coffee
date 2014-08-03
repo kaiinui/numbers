@@ -125,7 +125,7 @@ window.onload = ->
       this.y = 220
       this.frame = [0]
       this.image = game.assets["restart.png"]
-    ontouchstart: ->
+    ontouchend: ->
       SceneManager.pushScene(new GameScene())
   })
 
