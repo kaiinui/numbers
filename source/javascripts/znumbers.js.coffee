@@ -1,6 +1,6 @@
-window.onload = ->
-  enchant()
+enchant()
 
+window.onload = ->
   enchant.Sound.enabledInMobileSafari = true
 
   game = new Core(320, 360)
@@ -8,6 +8,7 @@ window.onload = ->
   game._n = 1
   game._state = "START" # START, PLAYING, CLEAR
   game.preload(['yubi.mp3', 'error.mp3', 'fin.mp3'])
+
 
   ButtonLabel = Class.create(Label, {
     initialize: (number)->
@@ -81,8 +82,7 @@ window.onload = ->
       this.text = (this._t / game.fps).toFixed(2)
   })
 
-
-  game.onload = ->
+  initialize = ->
     a = []
     for i in [1..25]
       a.push(i)
@@ -92,5 +92,7 @@ window.onload = ->
       new Button(i, shuffled[i - 1]) # [REFACTOR]
     new Timer()
 
+  game.onload = ->
+    initialize()
 
   game.start()
