@@ -10,8 +10,8 @@
     <!-- Use title if it's in the page YAML frontmatter -->
     <title><%= current_page.data.title || "numbers" %></title>
     
-    <%= stylesheet_link_tag "normalize" %>
-    <%= javascript_include_tag  "all" %>
+    <%= stylesheet_inline_tag "normalize" %>
+    <%= javascript_inline_tag  "all" %>
   </head>
   
   <body class="<%= page_classes %>">
