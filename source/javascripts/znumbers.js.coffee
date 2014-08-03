@@ -11,7 +11,7 @@ window.onload = ->
 
   game = new Core(320, 360)
   game.fps = 30
-  game.preload(['yubi.mp3', 'error.mp3', 'fin.mp3'])
+  game.preload(['yubi.mp3', 'error.mp3', 'fin.mp3', 'restart.png'])
 
   window.SceneManager = {
     currentScene: null,
@@ -110,20 +110,22 @@ window.onload = ->
 
   ScoreLabel = Class.create(Label, {
     initialize: (score)->
-      Label.call(this, 120, 30)
-      this.x = 100
+      Label.call(this, 320, 30)
+      this.x = 0
       this.y = 120
-      this.text = score
+      this.textAlign = "center"
+      this.font = "32px 'Consolas', 'Monaco', 'ＭＳ ゴシック'"
+      this.text = "32.83"
   })
 
-  RestartButton = Class.create(Label, {
+  RestartButton = Class.create(Sprite, {
     initialize: ->
-      Label.call(this, 120, 30)
-      this.x = 100
+      Sprite.call(this, 120, 47)
+      this.x = 90
       this.y = 220
-      this.backgroundColor = "#ccc"
-      this.text = "RESTART"
-    ontouchend: ->
+      this.frame = [0]
+      this.image = game.assets["restart.png"]
+    ontouchstart: ->
       SceneManager.pushScene(new GameScene())
   })
 
@@ -136,6 +138,7 @@ window.onload = ->
 
   window.initialize = ->
     SceneManager.pushScene(new GameScene())
+
 
   game.onload = ->
     initialize()
