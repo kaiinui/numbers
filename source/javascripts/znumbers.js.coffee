@@ -11,8 +11,6 @@ window.onload = ->
 
   game = new Core(320, 360)
   game.fps = 30
-  game._n = 1
-  game._state = "START" # START, PLAYING, CLEAR
   game.preload(['yubi.mp3', 'error.mp3', 'fin.mp3'])
 
 
@@ -89,6 +87,8 @@ window.onload = ->
   GameScene = Class.create(Group, {
     initialize: ->
       Group.call(this, 320, 320)
+      game._n = 1
+      game._state = "START" # START, PLAYING, CLEAR
       s = shuffled(25)
       for i in [1..25]
         this.addChild(new Button(i, s[i - 1])) # [REFACTOR]
@@ -96,8 +96,9 @@ window.onload = ->
   })
 
   window.initialize = ->
-    root = new GameScene()
-    game.rootScene.addChild root
+    game.rootScene.removeChild game._root if game._root
+    game._root = new GameScene()
+    game.rootScene.addChild game._root
 
   game.onload = ->
     initialize()
