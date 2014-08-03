@@ -13,12 +13,12 @@ window.onload = ->
   game.fps = 30
   game.preload(['yubi.mp3', 'error.mp3', 'fin.mp3'])
 
-  SceneManager = {
+  window.SceneManager = {
     currentScene: null,
     pushScene: (scene)->
       @_removeCurrentScene()
-      @currentScene = new GameScene()
-      game.rootScene.addChild @currentScene
+      @currentScene = scene
+      game.rootScene.addChild scene
     _removeCurrentScene: ->
       game.rootScene.removeChild @currentScene if @currentScene
   }
@@ -77,6 +77,8 @@ window.onload = ->
       if game._n > 25
         game.assets['fin.mp3'].play()
         game._state = "CLEAR"
+        SceneManager.pushScene(new ScoreScene(game._score))
+
   })
 
   Timer = Class.create(Label, {
@@ -91,7 +93,8 @@ window.onload = ->
     onenterframe: ->
       return unless game._state is "PLAYING"
       this._t += 1
-      this.text = (this._t / game.fps).toFixed(2)
+      game._score = (this._t / game.fps).toFixed(2)
+      this.text = game._score
   })
 
   GameScene = Class.create(Group, {
@@ -103,6 +106,32 @@ window.onload = ->
       for i in [1..25]
         this.addChild(new Button(i, s[i - 1])) # [REFACTOR]
       this.addChild(new Timer())
+  })
+
+  ScoreLabel = Class.create(Label, {
+    initialize: (score)->
+      Label.call(this, 120, 30)
+      this.x = 100
+      this.y = 120
+      this.text = score
+  })
+
+  RestartButton = Class.create(Label, {
+    initialize: ->
+      Label.call(this, 120, 30)
+      this.x = 100
+      this.y = 220
+      this.backgroundColor = "#ccc"
+      this.text = "RESTART"
+    ontouchend: ->
+      SceneManager.pushScene(new GameScene())
+  })
+
+  ScoreScene = Class.create(Group, {
+    initialize: (score)->
+      Group.call(this, 320, 320)
+      this.addChild(new ScoreLabel(score))
+      this.addChild(new RestartButton())
   })
 
   window.initialize = ->
