@@ -1,5 +1,11 @@
 enchant()
 
+window.shuffled = (n)->
+  a = []
+  for i in [1..n]
+    a.push(i)
+  _.shuffle(a)
+
 window.onload = ->
   enchant.Sound.enabledInMobileSafari = true
 
@@ -47,7 +53,6 @@ window.onload = ->
       this._button = new ButtonSprite()
       this.addChild(this._button)
       this.addChild(new ButtonLabel(number))
-      game.rootScene.addChild(this)
 
     ontouchstart: ->
       game._state = "PLAYING"
@@ -75,22 +80,24 @@ window.onload = ->
       this._t = 0
       this.font = "32px 'Consolas', 'Monaco', 'ＭＳ ゴシック'";
       this.color = "#000000"
-      game.rootScene.addChild this
     onenterframe: ->
       return unless game._state is "PLAYING"
       this._t += 1
       this.text = (this._t / game.fps).toFixed(2)
   })
 
-  initialize = ->
-    a = []
-    for i in [1..25]
-      a.push(i)
-    shuffled = _.shuffle(a)
+  GameScene = Class.create(Group, {
+    initialize: ->
+      Group.call(this, 320, 320)
+      s = shuffled(25)
+      for i in [1..25]
+        this.addChild(new Button(i, s[i - 1])) # [REFACTOR]
+      this.addChild(new Timer())
+  })
 
-    for i in [1..25]
-      new Button(i, shuffled[i - 1]) # [REFACTOR]
-    new Timer()
+  window.initialize = ->
+    root = new GameScene()
+    game.rootScene.addChild root
 
   game.onload = ->
     initialize()
