@@ -65,6 +65,22 @@ window.onload = ->
         game._state = "CLEAR"
   })
 
+  Timer = Class.create(Label, {
+    initialize: ->
+      Label.call(this, 100, 30)
+      this.x = 4
+      this.y = 324
+      this.text = "0"
+      this._t = 0
+      this.font = "32px 'Consolas', 'Monaco', 'ＭＳ ゴシック'";
+      this.color = "#000000"
+      game.rootScene.addChild this
+    onenterframe: ->
+      return unless game._state is "PLAYING"
+      this._t += 1
+      this.text = (this._t / game.fps).toFixed(2)
+  })
+
 
   game.onload = ->
     a = []
@@ -74,18 +90,7 @@ window.onload = ->
 
     for i in [1..25]
       new Button(i, shuffled[i - 1]) # [REFACTOR]
+    new Timer()
 
-    timer = new Label(100, 30)
-    timer.x = 4
-    timer.y = 324
-    timer.text = "0"
-    timer._t = 0
-    timer.font = "32px 'Consolas', 'Monaco', 'ＭＳ ゴシック'";
-    timer.color = "#000000"
-    timer.addEventListener 'enterframe', ->
-      if game._state is "PLAYING"
-        this._t += 1
-        this.text = (timer._t / game.fps).toFixed(2)
-    game.rootScene.addChild timer
 
   game.start()
