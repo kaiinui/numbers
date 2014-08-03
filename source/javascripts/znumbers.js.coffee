@@ -115,7 +115,7 @@ window.onload = ->
       this.y = 120
       this.textAlign = "center"
       this.font = "32px 'Consolas', 'Monaco', 'ＭＳ ゴシック'"
-      this.text = "32.83"
+      this.text = score
   })
 
   RestartButton = Class.create(Sprite, {
