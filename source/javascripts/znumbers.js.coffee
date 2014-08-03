@@ -25,12 +25,12 @@ window.onload = ->
       this.x = 0
       this.y = 0
       this._framecount = 0
-      this.backgroundColor = "#002366"
+      this.backgroundColor = "#ff5800"
     onenterframe: -> # [REFACTOR] dirty implementation
       if this._framecount >= 1
         this._framecount += 1
         if this._framecount >= 3
-          this.backgroundColor = "#002366"
+          this.backgroundColor = "#ff5800"
           this._framecount = 0
   })
 
